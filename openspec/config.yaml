@@ -3,23 +3,52 @@ schema: spec-driven
 # 项目上下文
 # 只包含引用代码也无法推断出的约束，用于指导 OpenSpec 工件与工作流生成。
 context: |
-  项目：个人品牌站（Personal Website）
-  技术栈：React 19 + Vite 7 + TypeScript + Tailwind CSS V4
-  部署：GitHub Pages，base path 为 /my-website/
-  设计风格：科技感，动态粒子背景，支持亮/暗模式切换
-  性能：首屏加载 < 2s，所有图片使用 lazy loading
+  项目：个人品牌站（Personal Website）→ 全栈 AI 学习平台（Fullstack AI Learning Platform）
+
+  现状：现有代码为纯前端个人品牌站（品牌展示 Dashboard），
+  正在向全栈 AI 学习平台扩展；已有代码必须复用，不推倒重来。
+
+  技术栈：
+  - 前端：React 19 + Vite 7 + TypeScript + Tailwind CSS V4（@tailwindcss/vite 插件）
+  - 后端：FastAPI + SQLite（即将添加，Python 侧）
+
+  样式方案：Tailwind CSS 工具类，支持暗色模式（dark: 前缀），
+  禁止内联 style；组件文件名 PascalCase；图片 lazy loading。
+
+  路由：当前无路由（单页 sections 滚动布局，App.tsx 直接组合 Navbar
+  + Hero/Projects/About/Contact 四个 Section）；新增平台功能时引入
+  路由方案，保持已有品牌站 sections 结构不变。
+
+  部署：前后端统一 GitHub Pages，前端 base path 为 /my-website/（gh-pages 分支）。
+
+  约束：
+  - 复用已有组件（components/ 下 9 个组件、theme/ 主题系统、content/ 数据层）
+  - 新增后端不影响前端构建与现有 gh-pages 部署流程
+  - 内容与视图保持分离：数据仍收敛在 src/content/ 数据层
+  - 性能：首屏加载 < 2s
+
+  设计风格：科技感，动态粒子背景，支持亮/暗模式切换。
 
   语言：所有工件（proposal、specs、tasks 等）使用简体中文生成；
   代码相关术语（如组件名、路径、命令）保留英文。
 
 # 各工件的自定义规则
 rules:
-  proposal:
-    - 必须明确写出 out-of-scope（不做什么）
-    - 必须评估对现有功能的影响
   specs:
-    - 使用 Given/When/Then 格式描述交互行为
-    - 每个 Spec 必须包含至少一个边界/异常场景
+    - 所有 API 行为使用 Given/When/Then 格式描述
+    - 每个 spec 必须包含至少一个错误场景
+    - 每个 requirement 的 scenario 不超过 5 个
+    - 每个 spec 文件不超过 2000 词
+    - 省略理由说明，除非直接影响实现
+    - 使用 RFC2119 关键词（SHALL/SHOULD/MAY）
   tasks:
-    - 每个任务粒度不超过 30 分钟
-    - 按 Phase 分组，每个 Phase 结束后等待用户确认，确认后才进入下一 Phase
+    - 单个 task 不超过 2 小时工时量
+    - 相关 task 按 Phase 分组
+    - 每个 Phase 结束后包含验证步骤
+    - 新建服务前必须先检查是否有可复用的已有服务
+  design:
+    - 包含组件层级图
+    - 文档化所有 API 端点规范
+  proposal:
+    - 必须显式列出不做的事项（out-of-scope / NOT doing 清单）
+    - 高风险变更必须包含回滚方案
