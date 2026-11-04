@@ -1,10 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { navItems } from '../content/nav'
 import { profile } from '../content/profile'
 
 export function Navbar() {
   const [isOffTop, setIsOffTop] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
+
+  // HashRouter 下哈希属于路由命名空间，锚点点击必须受控滚动，禁止改写哈希
+  const scrollToAnchor = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault()
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   useEffect(() => {
     const sentinel = sentinelRef.current
@@ -38,6 +45,7 @@ export function Navbar() {
       >
         <a
           href="#home"
+          onClick={(event) => scrollToAnchor(event, 'home')}
           className="max-w-[9rem] truncate text-sm font-medium text-zinc-900 hover:text-zinc-600 sm:max-w-none sm:text-base dark:text-zinc-100 dark:hover:text-zinc-300"
         >
           {profile.name}
@@ -47,11 +55,24 @@ export function Navbar() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="whitespace-nowrap text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
+              onClick={(event) => scrollToAnchor(event, item.id)}
+              className="hidden whitespace-nowrap sm:inline text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
             >
               {item.label}
             </a>
           ))}
+          <Link
+            to="/analysis"
+            className="whitespace-nowrap rounded-full bg-indigo-600 px-3 py-1 text-white transition-colors hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+          >
+            学习分析
+          </Link>
+          <Link
+            to="/chat"
+            className="whitespace-nowrap rounded-full bg-indigo-600 px-3 py-1 text-white transition-colors hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+          >
+            AI 助手
+          </Link>
         </nav>
       </header>
     </>
