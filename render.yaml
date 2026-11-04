@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: studypal-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: secret_key
+        generateValue: true
+      - key: cors_origins
+        value: '["http://localhost:5173","https://nononoyeah.github.io"]'
