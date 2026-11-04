@@ -16,6 +16,27 @@
 3. 等待我 review 并确认后，再继续下一个 Phase。
 4. 严禁一次性实现所有任务。
 
+## OpenSpec协作规则
+
+### 分阶段交互
+在执行 /opsx-apply时:
+1. 每完成一个phase停下来
+2. 总结当前阶段的变更（改了哪些文件，新增了什么）
+3. 等待我review确认后再继续下一个phase
+4. 如果发现偏差，立即停止并说明问题
+
+### 复用优先
+- 优先使用已有组件和服务
+- 新建文件前先搜索是否有可复用的
+- 不创建重复的utility函数
+
+### 命名一致性
+- change用domain-based naming（如user-auth，ai-chat），不用feature-level naming（如add-sidebar，fix-layout）
+- Spec按业务域组织（如ui/, auth/, ai/），每个域下按capability命名
+- React组件用PascalCase
+- API端点用kebab-case
+- 数据库表用snake_case
+
 ## 代码标准
 
 - 所有组件使用 TypeScript + 函数式组件
