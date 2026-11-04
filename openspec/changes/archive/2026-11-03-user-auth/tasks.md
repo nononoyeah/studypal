@@ -15,18 +15,18 @@
 
 ## 3. 认证路由（register / login / refresh）
 
-- [ ] 3.1 实现 `app/schemas.py` 认证相关请求/响应模型（注册、登录、刷新、用户输出不含密码哈希），验证模型可导入且字段与 design D6 表一致
-- [ ] 3.2 实现 `app/routers/auth.py` 三个端点（409 重复注册、401 凭据不符且错误信息不区分密码错误/用户不存在、refresh 仅收 type=refresh），验证 pytest API 测试覆盖 specs 全部 9 个场景
-- [ ] 3.3 登录成功路径接入 streak 口径更新（D4 四分支逻辑落在用户记录上），验证 pytest API 测试覆盖当日重复/跨日/断签三分支
+- [x] 3.1 实现 `app/schemas.py` 认证相关请求/响应模型（注册、登录、刷新、用户输出不含密码哈希），验证模型可导入且字段与 design D6 表一致
+- [x] 3.2 实现 `app/routers/auth.py` 三个端点（409 重复注册、401 凭据不符且错误信息不区分密码错误/用户不存在、refresh 仅收 type=refresh），验证 pytest API 测试覆盖 specs 全部 9 个场景
+- [x] 3.3 登录成功路径接入 streak 口径更新（D4 四分支逻辑落在用户记录上），验证 pytest API 测试覆盖当日重复/跨日/断签三分支
 
 ## 4. Profile 路由（users/me 读写）
 
-- [ ] 4.1 实现 `app/routers/users.py`：GET/PATCH `/api/users/me`，level 按 D5 映射表由 xp 计算，PATCH 仅接受合法 avatar_url 且 streak/level/xp 不可直改，验证 pytest API 测试覆盖 specs 全部 6 个场景（含未认证 401、非法 URL 422、默认 L1）
+- [x] 4.1 实现 `app/routers/users.py`：GET/PATCH `/api/users/me`，level 按 D5 映射表由 xp 计算，PATCH 仅接受合法 avatar_url 且 streak/level/xp 不可直改，验证 pytest API 测试覆盖 specs 全部 6 个场景（含未认证 401、非法 URL 422、默认 L1）
 
 ## 5. 集成验证
 
-- [ ] 5.1 全量 pytest 通过（backend/tests/），并用 uvicorn 启动后手动冒烟：注册 → 登录 → 刷新 → 读 Profile → 改头像 → 伪造 token 被 401，验证与 design D6 表逐项一致
-- [ ] 5.2 验证前端零影响：`npm run build` 成功、`src/` 无改动、dev.log 无新错误
+- [x] 5.1 全量 pytest 通过（backend/tests/），并用 uvicorn 启动后手动冒烟：注册 → 登录 → 刷新 → 读 Profile → 改头像 → 伪造 token 被 401，验证与 design D6 表逐项一致
+- [x] 5.2 验证前端零影响：`npm run build` 成功、`src/` 无改动、dev.log 无新错误
 
 ## Workflow follow-up
 
